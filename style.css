@@ -578,7 +578,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
 /* For smaller mobile phones */
 @media (max-width: 480px) {
     body {
-        padding: 15px 5px;
+        padding: 20px 5px;
     }
     h1 {
         font-size: 1.4em;
@@ -589,7 +589,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     }
     #intro-container {
         font-size: 0.78em;
-        padding: 0 15px 8px 15px;
+        padding: 0 20px 8px 20px;
     }
     #intro-container p {
         margin-bottom: 0.6em;
@@ -615,8 +615,8 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     }
 
     #info-panel {
-        width: 90%;
-        padding: 15px 15px;
+        width: 80%;
+        padding: 20px 20px;
         font-size: 11.5px;
         max-height: 85vh;
     }
@@ -656,11 +656,10 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
         padding: 4px;
     }
 
-    @keyframes pulseNodeGlowOnly { /* This redefines the animation for this breakpoint */
-        0% { filter: drop-shadow(0 0 8px rgba(216, 191, 216, 0.7)); }
-        50% { filter: drop-shadow(0 0 18px rgba(216, 191, 216, 0.9)); }
-        100% { filter: drop-shadow(0 0 8px rgba(216, 191, 216, 0.7)); }
+    svg text {
+        font-size: 8px; /* Adjust base size for SVG labels */
     }
+}
     #page-footer {
         margin-top: 15px;
         padding: 10px 5px;
