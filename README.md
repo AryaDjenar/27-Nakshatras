@@ -27,3 +27,9 @@ These texts describe the qualities of the planets and Nakshatras, as well as the
 ## Purpose
 
 The goal is to create a tool that makes Vedic astrology more accessible, especially the lesser-known lunar side of the tradition. While it is a personal project, it may serve as a helpful reference for others exploring these ideas for the first time.
+
+<p style="text-align: center; font-size: 1.5rem; font-weight: bold; color: #7CFC00;">
+  <a href="https://aryadjenar.github.io/27-Nakshatras/" target="_blank" style="color: #7CFC00; text-decoration: none;">
+    Experience the visualization here
+  </a>
+</p>
