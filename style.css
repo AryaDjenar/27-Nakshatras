@@ -66,7 +66,7 @@ h2.subtitle {
 }
 #intro-container em, #intro-container a {
     font-style: italic;
-    color: #C6ECAE;
+    color: #C6ECAE; /* Highlight color for links */
     text-decoration: none;
 }
 #intro-container a:hover {
@@ -90,7 +90,7 @@ h2.subtitle {
 
 /* Styles for Category Links */
 #category-links-container {
-    order: 4;
+    order: 4; /* After intro */
     width: 100%;
     max-width: 800px;
     text-align: center;
@@ -103,7 +103,7 @@ h2.subtitle {
 #category-links-container p {
     margin-bottom: 10px;
     font-style: italic;
-    color: #B3B3B3;
+    color: #B3B3B3; /* Color for "Learn more about:" text */
 }
 .category-link-item {
     display: inline-flex;
@@ -133,6 +133,56 @@ h2.subtitle {
 }
 /* End Styles for Category Links */
 
+/* --- UPDATED FOOTER STYLES --- */
+#page-footer {
+    order: 5; /* Position after category links */
+    width: 100%;
+    max-width: 800px; /* Consistent with other content blocks */
+    text-align: center;
+    padding: 20px 15px;
+    margin-top: 30px; /* Default top margin */
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(200, 162, 200, 0.15);
+}
+
+#social-footer {
+    display: flex;
+    justify-content: center; /* Center icons horizontally */
+    align-items: center; /* Vertically align icons */
+    gap: 30px; /* MODIFIED: Slightly reduced gap for general responsiveness */
+    margin-bottom: 15px; /* Space between icons and copyright */
+    margin-top: 0; /* Removed top margin here, as #page-footer has it */
+}
+
+.social-icon {
+    width: 25px; /* Size of the icons */
+    height: auto; /* Maintain aspect ratio */
+    transition: transform 0.3s ease, filter 0.3s ease;
+    /* Using a subtle glow based on #C6ECAE (light green-ish) */
+    filter: drop-shadow(0 4px 8px rgba(198, 236, 174, 0.3)); /* Softer, matching glow */
+}
+
+.social-icon:hover {
+    transform: scale(1.2); /* Slight zoom on hover */
+    /* Brighter glow on hover, based on #C6ECAE */
+    filter: drop-shadow(0 6px 12px rgba(198, 236, 174, 0.5));
+}
+
+.copyright-text {
+    font-size: 0.8em;
+    color: #B3B3B3; /* MODIFIED: Darker white, like "Learn more about:" text */
+    font-family: 'Xanh Mono', monospace;
+    margin-top: 15px; /* Added margin-top to ensure space from social icons */
+}
+
+.copyright-name {
+    font-style: italic;
+    letter-spacing: 0.1em; /* Equivalent to "100 tracking" */
+}
+/* --- END OF UPDATED FOOTER STYLES --- */
+
+
 svg {
     display: block;
     overflow: visible;
@@ -160,15 +210,15 @@ svg {
 }
 
 
-svg text { /* Base style for text within the main SVG diagram */
+svg text {
     fill: #E0E0E0;
     font-family: 'Xanh Mono', monospace;
-    font-size: 12px; /* Default base size, will be scaled by JS */
+    /* font-size is now primarily controlled by JavaScript in createNode */
     pointer-events: none;
     text-anchor: middle;
 }
 
-.planet-symbol { /* Base style for planet symbols in the main SVG diagram */
+.planet-symbol {
     font-family: 'Times New Roman', Times, serif;
     fill: #FFFFFF;
     text-anchor: middle;
@@ -252,7 +302,7 @@ svg text { /* Base style for text within the main SVG diagram */
     transition: opacity 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
     font-size: 14px;
     transform-origin: center center;
-    max-height: 85vh; /* Increased max-height slightly for more content room */
+    max-height: 85vh;
     overflow-y: auto;
     box-sizing: border-box;
 }
@@ -411,6 +461,8 @@ svg text { /* Base style for text within the main SVG diagram */
     --color-dot-ganas: #9F6F7D;
     --color-dot-nakshatraGunas: #E1D9BC;
     --color-dot-nakshatras-overview: #BCA8D6;
+    --color-highlight-link: #C6ECAE; /* Color for BPHS/Phaladeepika links */
+    --color-text-secondary: #B3B3B3; /* Color for "Learn more about:" text */
 }
 
 /* Category dot colors */
@@ -507,16 +559,26 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
         padding: 5px;
         margin-bottom: 8px;
     }
-    /* ADDED: SVG text size for tablets */
-    svg text {
-        font-size: 9px; /* Adjust base size for SVG labels */
+    #page-footer {
+        margin-top: 20px;
+        padding: 15px 10px;
+    }
+    #social-footer {
+        gap: 25px; /* Reduced gap for tablets */
+    }
+    .social-icon {
+        width: 26px;
+        height: 26px;
+    }
+    .copyright-text {
+        font-size: 0.75em;
     }
 }
 
 /* For smaller mobile phones */
 @media (max-width: 480px) {
     body {
-        padding: 20px 5px;
+        padding: 15px 5px;
     }
     h1 {
         font-size: 1.4em;
@@ -537,7 +599,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     }
     #category-links-container {
         padding: 10px 5px;
-        font-size: 0.9em;
+        font-size: 0.8em;
     }
     .category-link-item {
         margin: 4px 5px;
@@ -554,7 +616,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
 
     #info-panel {
         width: 90%;
-        padding: 20px 20px;
+        padding: 15px 15px;
         font-size: 11.5px;
         max-height: 85vh;
     }
@@ -599,9 +661,19 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
         50% { filter: drop-shadow(0 0 18px rgba(216, 191, 216, 0.9)); }
         100% { filter: drop-shadow(0 0 8px rgba(216, 191, 216, 0.7)); }
     }
-
-    /* ADDED: SVG text size for small mobile */
-    svg text {
-        font-size: 6px; /* Adjust base size for SVG labels */
+    #page-footer {
+        margin-top: 15px;
+        padding: 10px 5px;
+    }
+    #social-footer {
+        gap: 20px; /* Further reduced gap for small mobile */
+    }
+    .social-icon {
+        width: 24px;
+        height: 24px;
+        margin: 0 8px;
+    }
+    .copyright-text {
+        font-size: 0.7em;
     }
 }
