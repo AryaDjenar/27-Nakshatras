@@ -60,18 +60,19 @@ let hoverTimeout;
 let currentlyClickedId = null;
 let currentClickedCategory = null;
 
+// MODIFIED: Adjusted base sizes for desktop. Mobile sizes in createNode will scale from these.
 const nodeVisualSettings = {
-    baseRadius: 6.5,
-    planetNodeRadius: 16,
-    hoverIncrease: 2.5,
-    labelGap: 7,
+    baseRadius: 5.5,           // Example: Reduced from 6.5
+    planetNodeRadius: 14,      // Example: Reduced from 16
+    hoverIncrease: 2.5,        // This can remain, or be adjusted if desired
+    labelGap: 6,               // Example: Slightly reduced from 7
     labelLineHeight: 15,
-    baseSvgLabelFontSize: 12, // Base font size for general SVG labels (Nakshatras, Gunas, etc.)
-    basePlanetSymbolSize: 15  // Base font size for planet symbols (e.g., ☉, ☽)
+    baseSvgLabelFontSize: 10,  // Example: Reduced from 12 (for Nakshatras, Gunas, etc.)
+    basePlanetSymbolSize: 13   // Example: Reduced from 15 (for ☉, ☽ symbols)
 };
-const NAKSHATRA_GUNA_TRIANGLE_RADIUS = 25;
+const NAKSHATRA_GUNA_TRIANGLE_RADIUS = 25; // This might also need adjustment if the inner rings feel too tight
 
-const data = {
+const data = { // Your existing data object with all Nakshatra quotes, planets, etc.
     nakshatras: [
         {
             id: 'ashwini', name: 'Ashwini', planetId: 'ketu', purusharthaId: 'dharma', ganaId: 'deva', nakshatraGunaId: 'rajas',
@@ -649,13 +650,16 @@ function createNode(item) {
     let currentLabelFontSize = nodeVisualSettings.baseSvgLabelFontSize;
     let currentPlanetSymbolSize = nodeVisualSettings.basePlanetSymbolSize;
 
-    if (svgWidth < 480) {
-        currentLabelFontSize = 6;
-        currentPlanetSymbolSize = 8;
-    } else if (svgWidth < 768) {
-        currentLabelFontSize = 9;
-        currentPlanetSymbolSize = 11;
+    // Adjust base font sizes for smaller screens before scaling by SVG's overall transform
+    if (svgWidth < 480) { // Small mobile
+        currentLabelFontSize = 8; // Further reduced from 9
+        currentPlanetSymbolSize = 10; // Further reduced from 11
+    } else if (svgWidth < 768) { // Tablet
+        currentLabelFontSize = 9; // Reduced from 10
+        currentPlanetSymbolSize = 12; // Reduced from 13
     }
+    // For desktop (svgWidth >= 768), it will use the baseSvgLabelFontSize and basePlanetSymbolSize
+    // which are now set to 10 and 13 respectively in nodeVisualSettings.
 
     if (item.type === 'planet' && item.symbolUnicode) {
         const symbolText = document.createElementNS(svgNS, 'text');
@@ -677,11 +681,9 @@ function createNode(item) {
     textLabel.setAttribute('y', item.cy + item.labelVerticalOffset);
     textLabel.setAttribute('text-anchor', 'middle');
     textLabel.setAttribute('dominant-baseline', 'hanging');
-    if (item.type !== 'planet') {
-        textLabel.style.fontSize = currentLabelFontSize + 'px';
-    } else {
-        textLabel.style.fontSize = currentLabelFontSize + 'px';
-    }
+    // Apply dynamic font size to all labels, including planets
+    textLabel.style.fontSize = currentLabelFontSize + 'px';
+
 
     const hoverTarget = document.createElementNS(svgNS, 'circle');
     hoverTarget.setAttribute('cx', item.cx); hoverTarget.setAttribute('cy', item.cy);
@@ -834,8 +836,8 @@ function showInfoPanel(itemDataOrCategoryKey) {
         if (generalInfo) {
             infoShortIntro.innerHTML = generalInfo.description || '';
             const itemsOfTypeKey = generalInfo.itemsType === 'nakshatra_guna' ? 'nakshatraGunas' : generalInfo.itemsType + 's';
-            const itemsOfType = data[itemsOfTypeKey] || data[generalInfo.itemsType]; // Check both plural and singular for itemsType
-            if (itemsOfType && itemsOfType.length > 0 && generalInfo.itemsType !== 'generalInfo') { // Don't list items for generalInfo
+            const itemsOfType = data[itemsOfTypeKey] || data[generalInfo.itemsType];
+            if (itemsOfType && itemsOfType.length > 0 && generalInfo.itemsType !== 'generalInfo') {
                 attributeRelatedNakshatrasDiv.style.display = 'block';
                 infoCategoryItemsHeading.textContent = `Items in ${categoryDisplayName}:`;
                 attributeRelatedNakshatrasList.innerHTML = '';
