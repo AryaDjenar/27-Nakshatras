@@ -650,11 +650,11 @@ function createNode(item) {
     let currentPlanetSymbolSize = nodeVisualSettings.basePlanetSymbolSize;
 
     if (svgWidth < 480) {
-        currentLabelFontSize = 7;
-        currentPlanetSymbolSize = 9;
+        currentLabelFontSize = 6;
+        currentPlanetSymbolSize = 8;
     } else if (svgWidth < 768) {
-        currentLabelFontSize = 10;
-        currentPlanetSymbolSize = 13;
+        currentLabelFontSize = 9;
+        currentPlanetSymbolSize = 11;
     }
 
     if (item.type === 'planet' && item.symbolUnicode) {
