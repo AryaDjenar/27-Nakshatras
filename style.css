@@ -160,20 +160,21 @@ svg {
 }
 
 
-svg text {
+svg text { /* Base style for text within the main SVG diagram */
     fill: #E0E0E0;
     font-family: 'Xanh Mono', monospace;
-    font-size: 12px;
+    font-size: 12px; /* Default base size, will be scaled by JS */
     pointer-events: none;
     text-anchor: middle;
 }
 
-.planet-symbol {
+.planet-symbol { /* Base style for planet symbols in the main SVG diagram */
     font-family: 'Times New Roman', Times, serif;
     fill: #FFFFFF;
     text-anchor: middle;
     dominant-baseline: central;
     pointer-events: none;
+    /* Font size for planet symbols is now primarily controlled by JavaScript in createNode */
 }
 
 .node {
@@ -191,7 +192,6 @@ svg text {
      filter: drop-shadow(0 0 13px rgba(220, 200, 255, 0.95));
 }
 
-/* MODIFIED: Made glow slightly more intense */
 @keyframes pulseNodeGlowOnly {
     0% { filter: drop-shadow(0 0 6px rgba(200, 180, 230, 0.65)); }
     50% { filter: drop-shadow(0 0 16px rgba(200, 180, 230, 0.85)); }
@@ -444,20 +444,20 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
 /* For tablets and smaller devices */
 @media (max-width: 768px) {
     body {
-        padding: 15px 10px; /* Increased body padding for more breathing room */
+        padding: 15px 10px;
     }
     h1 {
-        font-size: 1.6em; /* Slightly smaller */
+        font-size: 1.6em;
     }
     h2.subtitle {
         font-size: 0.85em;
     }
     #intro-container {
         font-size: 0.85em;
-        padding: 0 15px 10px 15px; /* Adjusted padding for intro text */
+        padding: 0 15px 10px 15px;
     }
     .category-link-item {
-        margin: 5px 8px; /* Slightly adjust margin for better wrapping */
+        margin: 5px 8px;
         padding: 4px 6px;
     }
     .category-text {
@@ -466,39 +466,39 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     #info-panel {
         padding: 15px 20px;
         font-size: 13px;
-        width: 85%; /* MODIFIED: Panel width on tablets */
+        width: 85%;
         max-height: 85vh;
     }
     #info-panel h2 {
-        font-size: 1.25em; /* MODIFIED: Panel title on tablets */
+        font-size: 1.25em;
         margin-bottom: 12px;
     }
     #info-panel #info-short-intro,
     #info-panel .info-panel-paragraph {
-        font-size: 0.88em; /* Relative to panel's font-size */
+        font-size: 0.88em;
         line-height: 1.45;
     }
     #info-panel #info-ruling-deity-heading,
     #info-panel .info-panel-subheading,
     #info-panel h3 {
-        font-size: 0.95em; /* Relative to panel's font-size */
+        font-size: 0.95em;
         margin-top: 10px;
         margin-bottom: 3px;
     }
     #info-panel #info-ruling-deity-text,
     #info-panel .info-panel-subheading-text {
-        font-size: 0.82em; /* Relative to panel's font-size */
+        font-size: 0.82em;
         margin-bottom: 10px;
     }
     #info-panel ul li {
-        font-size: 0.88em; /* Relative to panel's font-size */
+        font-size: 0.88em;
     }
     .attribute-description,
     .detail-list-item-description {
-        font-size: 0.82em; /* Relative to panel's font-size */
+        font-size: 0.82em;
     }
     .classical-quote-text {
-        font-size: 0.82em; /* Relative to panel's font-size */
+        font-size: 0.82em;
         line-height: 1.35;
     }
     #nakshatra-icon-container {
@@ -507,93 +507,101 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
         padding: 5px;
         margin-bottom: 8px;
     }
+    /* ADDED: SVG text size for tablets */
+    svg text {
+        font-size: 11px; /* Adjust base size for SVG labels */
+    }
 }
 
 /* For smaller mobile phones */
 @media (max-width: 480px) {
     body {
-        padding: 20px 10px; /* MODIFIED: Increased body padding from screen edges */
+        padding: 15px 5px;
     }
     h1 {
-        font-size: 1.4em; /* MODIFIED: Further reduce main title */
+        font-size: 1.4em;
     }
     h2.subtitle {
-        font-size: 0.75em; /* MODIFIED: Further reduce subtitle */
+        font-size: 0.75em;
         margin-bottom: 10px;
     }
     #intro-container {
-        font-size: 0.78em; /* MODIFIED: Further reduce intro text */
-        padding: 0 20px 8px 15px; /* MODIFIED: Increased side padding for intro */
+        font-size: 0.78em;
+        padding: 0 15px 8px 15px;
     }
     #intro-container p {
         margin-bottom: 0.6em;
     }
     .interactive-instruction {
-        font-size: 0.75em; /* MODIFIED: Further reduce instruction text */
+        font-size: 0.75em;
     }
     #category-links-container {
         padding: 10px 5px;
-        font-size: 0.8em; /* MODIFIED: Further reduce category link container font */
+        font-size: 0.8em;
     }
     .category-link-item {
-        margin: 4px 5px; /* MODIFIED: Slightly adjust for stacking */
+        margin: 4px 5px;
         display: block;
         width: auto;
         text-align: left;
     }
      .category-dot {
-        margin-right: 5px;
+        margin-right: 6px;
     }
     .category-text {
-        font-size: 0.7em; /* Relative to parent .category-link-item */
+        font-size: 0.9em;
     }
 
     #info-panel {
-        width: 70%; /* MODIFIED: Changed from 95% to 90% of screen width */
-        padding: 20px 20px; /* MODIFIED: Increased internal padding */
-        font-size: 11.5px; /* MODIFIED: Slightly reduce base font for panel on very small screens */
-        max-height: 65vh;
+        width: 90%;
+        padding: 15px 15px;
+        font-size: 11.5px;
+        max-height: 85vh;
     }
     #info-panel h2 {
-        font-size: 1.15em; /* MODIFIED: Panel title on small mobile */
+        font-size: 1.15em;
         margin-bottom: 8px;
     }
      #info-panel #info-short-intro,
     #info-panel .info-panel-paragraph {
-        font-size: 0.9em; /* Relative to panel's font-size */
+        font-size: 0.9em;
         line-height: 1.45;
     }
     #info-panel #info-ruling-deity-heading,
     #info-panel .info-panel-subheading,
     #info-panel h3 {
-        font-size: 0.95em; /* Relative to panel's font-size */
+        font-size: 0.95em;
     }
     #info-panel #info-ruling-deity-text,
     #info-panel .info-panel-subheading-text {
-        font-size: 0.85em; /* Relative to panel's font-size */
+        font-size: 0.85em;
     }
     .attribute-description,
     .detail-list-item-description {
-        font-size: 0.82em; /* Relative to panel's font-size */
+        font-size: 0.82em;
     }
     .classical-quote-text {
-        font-size: 0.82em; /* Relative to panel's font-size */
+        font-size: 0.82em;
     }
     #close-panel {
-        font-size: 22px; /* MODIFIED: Slightly smaller close button */
+        font-size: 22px;
         top: 8px;
         right: 8px;
     }
     #nakshatra-icon-container {
-        width: 38px; /* MODIFIED: Smaller icon */
+        width: 38px;
         height: 38px;
         padding: 4px;
     }
 
-    /* MODIFIED: Making the glow animation more pronounced on mobile */
-    @keyframes pulseNodeGlowOnly {
-        0% { filter: drop-shadow(0 0 8px rgba(216, 191, 216, 0.7)); } /* Increased spread and opacity */
-        50% { filter: drop-shadow(0 0 18px rgba(216, 191, 216, 0.9)); } /* Increased spread and opacity */
+    @keyframes pulseNodeGlowOnly { /* This redefines the animation for this breakpoint */
+        0% { filter: drop-shadow(0 0 8px rgba(216, 191, 216, 0.7)); }
+        50% { filter: drop-shadow(0 0 18px rgba(216, 191, 216, 0.9)); }
         100% { filter: drop-shadow(0 0 8px rgba(216, 191, 216, 0.7)); }
+    }
+
+    /* ADDED: SVG text size for small mobile */
+    svg text {
+        font-size: 10px; /* Adjust base size for SVG labels */
     }
 }
