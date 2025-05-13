@@ -509,7 +509,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     }
     /* ADDED: SVG text size for tablets */
     svg text {
-        font-size: 11px; /* Adjust base size for SVG labels */
+        font-size: 9px; /* Adjust base size for SVG labels */
     }
 }
 
@@ -602,6 +602,6 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
 
     /* ADDED: SVG text size for small mobile */
     svg text {
-        font-size: 8px; /* Adjust base size for SVG labels */
+        font-size: 6px; /* Adjust base size for SVG labels */
     }
 }
