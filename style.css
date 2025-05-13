@@ -106,7 +106,7 @@ h2.subtitle {
 .category-link-item {
     display: inline-flex; /* Align dot and text nicely */
     align-items: center;
-    margin: 0 15px 10px; /* Spacing around items */
+    margin: 5px 10px; /* Adjusted margin for better wrapping on mobile */
     cursor: pointer;
     padding: 5px 8px;
     border-radius: 6px;
@@ -123,9 +123,11 @@ h2.subtitle {
     border-radius: 50%;
     margin-right: 8px;
     display: inline-block;
+    flex-shrink: 0; /* Prevent dot from shrinking */
 }
 .category-text {
     font-family: 'Xanh Mono', monospace;
+    font-size: 0.9em; /* Slightly reduce category text for mobile */
 }
 /* End Styles for Category Links */
 
@@ -136,19 +138,18 @@ svg { /* General SVG styling (applies to the main diagram) */
 
 /* Styling for the dynamically loaded icon container */
 #nakshatra-icon-container {
-    width: 60px;
-    height: 60px;
+    width: 50px; /* Slightly smaller icon container for mobile */
+    height: 50px;/* Slightly smaller icon container for mobile */
     background-color: #cba7cb; /* Lilac background for the circle */
     border-radius: 50%; /* Makes it a circle */
     border: 1.5px solid #B2A2D6; /* Subtle border */
     display: flex; /* Use flex to center content */
     align-items: center;
     justify-content: center;
-    margin: 0 auto 15px auto; /* Center horizontally, space below */
-    padding: 8px; /* Inner spacing for the icon */
+    margin: 0 auto 10px auto; /* Center horizontally, reduced space below */
+    padding: 6px; /* Inner spacing for the icon */
     box-sizing: border-box;
-    /* Container is hidden by default; JS shows it */
-    display: none;
+    display: none; /* Container is hidden by default; JS shows it */
 }
 
 /* Styling for ANY SVG loaded into the icon container */
@@ -162,7 +163,7 @@ svg { /* General SVG styling (applies to the main diagram) */
 svg text { /* Styling for text within the main diagram SVG */
     fill: #E0E0E0;
     font-family: 'Xanh Mono', monospace;
-    font-size: 12px; /* SVG text size */
+    font-size: 12px; /* SVG text size - JS scaling handles overall size */
     pointer-events: none;
     text-anchor: middle;
 }
@@ -246,7 +247,7 @@ svg text { /* Styling for text within the main diagram SVG */
     z-index: 1000; display: none; opacity: 0;
     font-family: 'Xanh Mono', monospace;
     transition: opacity 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-    font-size: 14px;
+    font-size: 14px; /* Base font size for panel */
     transform-origin: center center;
     max-height: 80vh;
     overflow-y: auto;
@@ -255,14 +256,14 @@ svg text { /* Styling for text within the main diagram SVG */
 
 #info-panel h2 { /* Title inside info panel */
     color: #C8A2C8; margin-top: 0; margin-bottom: 15px;
-    font-size: 1.5em;
+    font-size: 1.4em; /* Slightly reduced for general panel title */
     text-align: center;
     font-family: 'Xanh Mono', monospace;
     line-height: 1.3;
 }
 .info-panel-title-subtitle {
     display: block;
-    font-size: 80%;
+    font-size: 0.8em; /* Adjusted relative to new h2 size */
     font-style: italic;
     color: #D8BFD8;
     margin-top: 2px;
@@ -270,20 +271,21 @@ svg text { /* Styling for text within the main diagram SVG */
 
 #info-panel #info-short-intro,
 #info-panel .info-panel-paragraph {
-    margin-bottom: 12px;
-    line-height: 1.6;
+    margin-bottom: 10px; /* Reduced bottom margin */
+    line-height: 1.5;  /* Slightly reduced line height */
     color: #FFFFFF;
+    font-size: 0.9em;  /* Base paragraph text in panel */
 }
 #info-panel #info-short-intro p {
-    margin-bottom: 0.8em;
+    margin-bottom: 0.7em;
 }
 #info-panel #info-short-intro ul {
     list-style: disc;
     padding-left: 20px;
-    margin-bottom: 0.8em;
+    margin-bottom: 0.7em;
 }
 #info-panel #info-short-intro li {
-    padding: 2px 0;
+    padding: 1px 0; /* Reduced padding */
 }
 #info-panel #info-short-intro strong {
     color: #D8BFD8;
@@ -296,31 +298,31 @@ svg text { /* Styling for text within the main diagram SVG */
 #info-panel #info-ruling-deity-heading,
 #info-panel .info-panel-subheading {
     color: #C8A2C8;
-    font-size: 1.1em;
-    margin-top: 15px;
-    margin-bottom: 5px;
+    font-size: 1.0em; /* Reduced subheading size */
+    margin-top: 12px; /* Reduced margin */
+    margin-bottom: 4px; /* Reduced margin */
     font-family: 'Xanh Mono', monospace;
     font-weight: bold;
 }
 #info-panel #info-ruling-deity-text,
 #info-panel .info-panel-subheading-text {
     margin-top: 0;
-    margin-bottom: 15px;
-    line-height: 1.6;
+    margin-bottom: 12px; /* Reduced margin */
+    line-height: 1.5;
     color: #FFFFFF;
-    font-size: 0.95em;
+    font-size: 0.85em; /* Reduced subheading text size */
 }
 
-#info-panel ul { list-style: none; padding-left: 0; margin-bottom: 12px; }
+#info-panel ul { list-style: none; padding-left: 0; margin-bottom: 10px; }
 #info-panel ul li {
-    padding: 4px 0;
-    font-size: 1em;
+    padding: 3px 0; /* Reduced padding */
+    font-size: 0.9em; /* Reduced list item font size */
     line-height: 1.4;
 }
 #nakshatra-attributes-container ul li,
 #info-attribute-related-nakshatras ul li,
 #info-guna-associated-nakshatras ul li {
-    padding: 7px 0;
+    padding: 6px 0; /* Reduced padding */
     border-bottom: 1px solid rgba(200, 162, 200, 0.25);
 }
  #nakshatra-attributes-container ul li:last-child,
@@ -332,24 +334,26 @@ svg text { /* Styling for text within the main diagram SVG */
 .attribute-description,
 .detail-list-item-description {
     display: block;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Reduced description font size */
     color: rgba(224, 224, 224, 0.85);
-    padding-left: 10px;
-    margin-top: 3px;
-    line-height: 1.5;
+    padding-left: 8px; /* Reduced padding */
+    margin-top: 2px; /* Reduced margin */
+    line-height: 1.4;
 }
 
-#info-panel h3 { /* General h3 inside info panel, can be reused by .info-panel-subheading */
+#info-panel h3 { /* General h3 inside info panel, used by .info-panel-subheading */
     color: #C8A2C8;
-    font-size: 1.1em;
-    margin-top: 18px; margin-bottom: 10px;
+    font-size: 1.0em; /* Consistent with .info-panel-subheading */
+    margin-top: 15px; margin-bottom: 8px; /* Adjusted margins */
     font-family: 'Xanh Mono', monospace;
     font-weight: bold;
 }
 #close-panel {
     color: #C8A2C8;
-    position: absolute; top: 12px; right: 12px; background: transparent; border: none;
-    font-size: 30px; cursor: pointer;
+    position: absolute; top: 10px; right: 10px; /* Slightly adjusted position */
+    background: transparent; border: none;
+    font-size: 28px; /* Slightly smaller close button */
+    cursor: pointer;
     font-family: Arial, sans-serif; padding: 5px; line-height: 0.5;
     transition: color 0.2s ease, transform 0.2s ease;
 }
@@ -358,20 +362,21 @@ svg text { /* Styling for text within the main diagram SVG */
 
 /* Classical Quotes Section Styles */
 #nakshatra-classical-quotes {
-    margin-top: 20px;
-    padding-top: 15px;
+    margin-top: 15px; /* Reduced margin */
+    padding-top: 10px; /* Reduced padding */
     border-top: 1px solid rgba(200, 162, 200, 0.25);
 }
 
 #nakshatra-classical-quotes h3.info-panel-subheading {
     margin-top: 0;
+    font-size: 1.0em; /* Consistent with other subheadings */
 }
 
 .classical-quote-text {
-    font-size: 0.9em;
+    font-size: 0.85em; /* Reduced quote text size */
     color: rgba(224, 224, 224, 0.9);
-    line-height: 1.5;
-    margin-bottom: 10px;
+    line-height: 1.4;
+    margin-bottom: 8px;
     font-style: italic;
 }
 
@@ -397,34 +402,22 @@ svg text { /* Styling for text within the main diagram SVG */
     --color-purushartha-base: #0F5257;
     --color-nakshatra-guna-base: #E1D9BC;
 
-    --color-dot-planets: #F6C145; /* Used for the gradient if not hardcoded */
+    --color-dot-planets: #F6C145;
     --color-dot-purusharthas: #0F5257;
     --color-dot-ganas: #9F6F7D;
     --color-dot-nakshatraGunas: #E1D9BC;
-    /* ADD NEW VARIABLE FOR NAKSHATRAS OVERVIEW DOT */
-    --color-dot-nakshatras-overview: #BCA8D6; /* Example: a light lavender */
+    --color-dot-nakshatras-overview: #BCA8D6;
 }
 
 /* Category dot colors */
 .category-dot[data-category="planets"] {
-    background-image: linear-gradient(to right, #F6C145, #D14E4E);
+    background-image: linear-gradient(to right, #F6C145, #D14E4E,  #88C999);
 }
 .category-dot[data-category="purusharthas"] { background-color: var(--color-dot-purusharthas); }
 .category-dot[data-category="ganas"] { background-color: var(--color-dot-ganas); }
 .category-dot[data-category="nakshatraGunas"] { background-color: var(--color-dot-nakshatraGunas); }
-/* ADD RULE FOR NEW NAKSHATRAS OVERVIEW DOT */
 .category-dot[data-category="nakshatrasOverview"] { background-color: var(--color-dot-nakshatras-overview); }
 
-
-/* Category dot colors */
-/* CHANGE: Gradient applied to the planets category dot */
-.category-dot[data-category="planets"] {
-    /* background-color: var(--color-dot-planets); */ /* Old solid color */
-    background-image: linear-gradient(to right, #F6C145, #D14E4E,  #88C999); /* Example: Sun yellow to Mars red */
-}
-.category-dot[data-category="purusharthas"] { background-color: var(--color-dot-purusharthas); }
-.category-dot[data-category="ganas"] { background-color: var(--color-dot-ganas); }
-.category-dot[data-category="nakshatraGunas"] { background-color: var(--color-dot-nakshatraGunas); }
 
 /* Node fill colors in the SVG diagram (these remain solid colors) */
 circle.nakshatra-node { fill: var(--color-nakshatra-default); }
@@ -440,3 +433,152 @@ circle.planet-node[data-id="jupiter"] { fill: var(--color-planet-jupiter); }
 circle.planet-node[data-id="saturn"] { fill: var(--color-planet-saturn); }
 circle.planet-node[data-id="rahu"] { fill: var(--color-planet-rahu); }
 circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
+
+
+/* --- Responsive Adjustments --- */
+
+/* For tablets and smaller devices */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.7em;
+    }
+    h2.subtitle {
+        font-size: 0.9em;
+    }
+    #intro-container {
+        font-size: 0.85em;
+        padding: 0 10px 10px 10px;
+    }
+    .category-link-item {
+        margin: 5px; /* Tighter margin for category links */
+        padding: 4px 6px;
+    }
+    .category-text {
+        font-size: 0.85em;
+    }
+    #info-panel {
+        padding: 15px 20px; /* Reduce padding inside info panel */
+        font-size: 13px; /* Slightly reduce base font for panel */
+    }
+    #info-panel h2 {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+    }
+    #info-panel #info-short-intro,
+    #info-panel .info-panel-paragraph {
+        font-size: 0.88em;
+        line-height: 1.45;
+    }
+    #info-panel #info-ruling-deity-heading,
+    #info-panel .info-panel-subheading,
+    #info-panel h3 {
+        font-size: 0.95em;
+        margin-top: 10px;
+        margin-bottom: 3px;
+    }
+    #info-panel #info-ruling-deity-text,
+    #info-panel .info-panel-subheading-text {
+        font-size: 0.82em;
+        margin-bottom: 10px;
+    }
+    #info-panel ul li {
+        font-size: 0.88em;
+    }
+    .attribute-description,
+    .detail-list-item-description {
+        font-size: 0.82em;
+    }
+    .classical-quote-text {
+        font-size: 0.82em;
+        line-height: 1.35;
+    }
+    #nakshatra-icon-container {
+        width: 45px;
+        height: 45px;
+        padding: 5px;
+        margin-bottom: 8px;
+    }
+}
+
+/* For smaller mobile phones */
+@media (max-width: 480px) {
+    body {
+        padding: 5px; /* Reduce overall body padding */
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+    h2.subtitle {
+        font-size: 0.8em;
+        margin-bottom: 10px;
+    }
+    #intro-container {
+        font-size: 0.8em;
+        padding: 0 8px 8px 8px;
+    }
+    #intro-container p {
+        margin-bottom: 0.6em;
+    }
+    .interactive-instruction {
+        font-size: 0.8em;
+    }
+    #category-links-container {
+        padding: 10px 5px; /* Reduce padding */
+        font-size: 0.85em;
+    }
+    .category-link-item {
+        margin: 3px 5px;
+        display: block; /* Stack category links vertically */
+        width: auto; /* Allow them to take natural width */
+        text-align: left; /* Align text to left within the block */
+    }
+     .category-dot {
+        margin-right: 6px;
+    }
+    .category-text {
+        font-size: 0.8em;
+    }
+
+    #info-panel {
+        width: 95%; /* Make panel take more width */
+        padding: 10px 15px;
+        font-size: 12px;
+        max-height: 85vh; /* Allow slightly more height */
+    }
+    #info-panel h2 {
+        font-size: 1.2em;
+        margin-bottom: 8px;
+    }
+     #info-panel #info-short-intro,
+    #info-panel .info-panel-paragraph {
+        font-size: 0.85em; /* Relative to panel's 12px */
+        line-height: 1.4;
+    }
+    #info-panel #info-ruling-deity-heading,
+    #info-panel .info-panel-subheading,
+    #info-panel h3 {
+        font-size: 0.9em; /* Relative to panel's 12px */
+    }
+    #info-panel #info-ruling-deity-text,
+    #info-panel .info-panel-subheading-text {
+        font-size: 0.8em; /* Relative to panel's 12px */
+    }
+    .attribute-description,
+    .detail-list-item-description {
+        font-size: 0.78em; /* Relative to panel's 12px */
+    }
+    .classical-quote-text {
+        font-size: 0.78em; /* Relative to panel's 12px */
+    }
+    #close-panel {
+        font-size: 24px;
+        top: 8px;
+        right: 8px;
+    }
+    #nakshatra-icon-container {
+        width: 40px;
+        height: 40px;
+        padding: 4px;
+    }
+}
+```
