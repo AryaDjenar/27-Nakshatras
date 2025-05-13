@@ -512,7 +512,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
 /* For smaller mobile phones */
 @media (max-width: 480px) {
     body {
-        padding: 30px 5px; /* MODIFIED: Increased body padding from screen edges */
+        padding: 20px 10px; /* MODIFIED: Increased body padding from screen edges */
     }
     h1 {
         font-size: 1.4em; /* MODIFIED: Further reduce main title */
@@ -523,7 +523,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     }
     #intro-container {
         font-size: 0.78em; /* MODIFIED: Further reduce intro text */
-        padding: 0 30px 8px 15px; /* MODIFIED: Increased side padding for intro */
+        padding: 0 20px 8px 15px; /* MODIFIED: Increased side padding for intro */
     }
     #intro-container p {
         margin-bottom: 0.6em;
@@ -542,15 +542,15 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
         text-align: left;
     }
      .category-dot {
-        margin-right: 6px;
+        margin-right: 5px;
     }
     .category-text {
-        font-size: 0.9em; /* Relative to parent .category-link-item */
+        font-size: 0.7em; /* Relative to parent .category-link-item */
     }
 
     #info-panel {
         width: 70%; /* MODIFIED: Changed from 95% to 90% of screen width */
-        padding: 30px 30px; /* MODIFIED: Increased internal padding */
+        padding: 20px 20px; /* MODIFIED: Increased internal padding */
         font-size: 11.5px; /* MODIFIED: Slightly reduce base font for panel on very small screens */
         max-height: 65vh;
     }
