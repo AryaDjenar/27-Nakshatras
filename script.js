@@ -54,15 +54,20 @@ const infoCategoryItemsHeading = document.getElementById('info-category-items-he
 const closePanelButton = document.getElementById('close-panel');
 const categoryLinkItems = document.querySelectorAll('.category-link-item');
 
-let svgWidth, svgHeight, centerX, centerY;
+let svgWidth, svgHeight, centerX, centerY; // These will be set in calculateLayoutAndPositions
 const elements = {};
 let hoverTimeout;
 let currentlyClickedId = null;
 let currentClickedCategory = null;
 
 const nodeVisualSettings = {
-    baseRadius: 6.5, planetNodeRadius: 16, hoverIncrease: 2.5,
-    labelGap: 7, labelLineHeight: 15, planetSymbolSize: '15px'
+    baseRadius: 6.5,
+    planetNodeRadius: 16,
+    hoverIncrease: 2.5,
+    labelGap: 7,
+    labelLineHeight: 15,
+    baseSvgLabelFontSize: 12, // Base font size for general SVG labels (Nakshatras, Gunas, etc.)
+    basePlanetSymbolSize: 15  // Base font size for planet symbols (e.g., ☉, ☽)
 };
 const NAKSHATRA_GUNA_TRIANGLE_RADIUS = 25;
 
@@ -353,7 +358,7 @@ const data = {
           id: 'rahu',
           name: 'Rahu',
           symbolUnicode: '☊',
-          mainDescription: "Rahu is the severed head of the demon Svarbhanu, who tried to steal Amrita during the churning of the ocean. Though bodiless, he was granted planetary status and creates eclipse. In classical texts, Rahu represents illusion, craving, and unconventional desire.",
+          mainDescription: "Rahu is the shadowy North Node — the head of the immortal serpent who tried to steal the gods’ nectar. Though bodiless, he was granted planetary status and creates eclipse. In classical texts, Rahu represents illusion, craving, and unconventional desire.",
           psychologicalInfluence: "Rahu governs unfulfilled desire, confusion, foreignness, and worldly ambition.",
           rulingNakshatrasText: "Ardra, Swati, Shatabhisha",
           nakshatraInfluence: "These Nakshatras amplify Rahu’s intensity. They pursue disruption, reinvention, and freedom but may carry obsession or social defiance."
@@ -526,9 +531,8 @@ const categoryGeneralInfo = {
                         <li>Reflect on how those layers shape your behavior and emotional responses</li>
                       </ul>
                       <p>Understanding Nakshatras helps reveal your internal patterns with more clarity. It becomes easier to work with your energy, not against it.</p>`,
-        itemsType: 'generalInfo' // This ensures no sub-item list is attempted for this overview
+        itemsType: 'generalInfo'
     }
-    // END OF NEW ENTRY
 };
 const labelVerticalOffsetDefault = nodeVisualSettings.baseRadius + nodeVisualSettings.labelGap;
 const categoriesLayout = [
@@ -568,7 +572,8 @@ function calculateLayoutAndPositions() {
     const containerHeight = diagramContainer.clientHeight;
     svgElement.setAttribute('width', containerWidth);
     svgElement.setAttribute('height', containerHeight);
-    svgWidth = containerWidth; svgHeight = containerHeight;
+    svgWidth = containerWidth; // svgWidth is set here and accessible globally in this script
+    svgHeight = containerHeight;
     centerX = svgWidth / 2; centerY = svgHeight / 2;
     let currentCalculatedRadius = 0;
     categoriesLayout.forEach((catInfo, ringIndex) => {
@@ -640,21 +645,44 @@ function createNode(item) {
     circle.setAttribute('cx', item.cx); circle.setAttribute('cy', item.cy); circle.setAttribute('r', currentBaseRadius);
     circle.classList.add(`${item.type}-node`); circle.dataset.id = item.id;
     group.appendChild(circle);
+
+    let currentLabelFontSize = nodeVisualSettings.baseSvgLabelFontSize;
+    let currentPlanetSymbolSize = nodeVisualSettings.basePlanetSymbolSize;
+
+    if (svgWidth < 480) {
+        currentLabelFontSize = 9;
+        currentPlanetSymbolSize = 11;
+    } else if (svgWidth < 768) {
+        currentLabelFontSize = 10;
+        currentPlanetSymbolSize = 13;
+    }
+
     if (item.type === 'planet' && item.symbolUnicode) {
         const symbolText = document.createElementNS(svgNS, 'text');
         symbolText.textContent = item.symbolUnicode;
         symbolText.setAttribute('x', item.cx); symbolText.setAttribute('y', item.cy);
-        symbolText.setAttribute('class', 'planet-symbol'); symbolText.style.fontSize = nodeVisualSettings.planetSymbolSize;
+        symbolText.setAttribute('class', 'planet-symbol');
+        symbolText.style.fontSize = currentPlanetSymbolSize + 'px';
         symbolText.setAttribute('dominant-baseline', 'central');
         const circleFill = getNodeColor(item);
         if (circleFill.toLowerCase() === '#ffd700' || circleFill.toLowerCase() === '#f0e68c' || circleFill.toLowerCase() === '#dda0dd' || circleFill.toLowerCase() === '#b9ffe2' ) { symbolText.style.fill = '#333333'; }
         else { symbolText.style.fill = '#FFFFFF'; }
         group.appendChild(symbolText);
     }
+
     const textLabel = document.createElementNS(svgNS, 'text');
-    textLabel.textContent = item.name; textLabel.classList.add('node-text');
-    textLabel.setAttribute('x', item.cx); textLabel.setAttribute('y', item.cy + item.labelVerticalOffset);
-    textLabel.setAttribute('text-anchor', 'middle'); textLabel.setAttribute('dominant-baseline', 'hanging');
+    textLabel.textContent = item.name;
+    textLabel.classList.add('node-text');
+    textLabel.setAttribute('x', item.cx);
+    textLabel.setAttribute('y', item.cy + item.labelVerticalOffset);
+    textLabel.setAttribute('text-anchor', 'middle');
+    textLabel.setAttribute('dominant-baseline', 'hanging');
+    if (item.type !== 'planet') {
+        textLabel.style.fontSize = currentLabelFontSize + 'px';
+    } else {
+        textLabel.style.fontSize = currentLabelFontSize + 'px';
+    }
+
     const hoverTarget = document.createElementNS(svgNS, 'circle');
     hoverTarget.setAttribute('cx', item.cx); hoverTarget.setAttribute('cy', item.cy);
     hoverTarget.setAttribute('r', currentBaseRadius + nodeVisualSettings.labelGap * 0.6);
@@ -770,7 +798,6 @@ function updateRelatedHighlights(primaryId, isActivating) {
 
 // --- Info Panel Logic ---
 function showInfoPanel(itemDataOrCategoryKey) {
-    // Reset panel content visibility and clear icon
     infoTitle.innerHTML = '';
     infoShortIntro.innerHTML = '';
     infoRulingDeityHeading.style.display = 'none';
@@ -807,8 +834,8 @@ function showInfoPanel(itemDataOrCategoryKey) {
         if (generalInfo) {
             infoShortIntro.innerHTML = generalInfo.description || '';
             const itemsOfTypeKey = generalInfo.itemsType === 'nakshatra_guna' ? 'nakshatraGunas' : generalInfo.itemsType + 's';
-            const itemsOfType = data[itemsOfTypeKey] || data[generalInfo.itemsType];
-            if (itemsOfType && itemsOfType.length > 0) {
+            const itemsOfType = data[itemsOfTypeKey] || data[generalInfo.itemsType]; // Check both plural and singular for itemsType
+            if (itemsOfType && itemsOfType.length > 0 && generalInfo.itemsType !== 'generalInfo') { // Don't list items for generalInfo
                 attributeRelatedNakshatrasDiv.style.display = 'block';
                 infoCategoryItemsHeading.textContent = `Items in ${categoryDisplayName}:`;
                 attributeRelatedNakshatrasList.innerHTML = '';
@@ -834,8 +861,11 @@ function showInfoPanel(itemDataOrCategoryKey) {
         const itemData = itemDataOrCategoryKey;
         infoTitle.textContent = itemData.name;
 
-        if (itemData.type === 'nakshatra') {
+        if (itemData.type === 'nakshatra' || itemData.type === 'planet' || itemData.type === 'nakshatra_guna' || itemData.type === 'purushartha' || itemData.type === 'gana') {
             loadItemIcon(itemData.id);
+        }
+
+        if (itemData.type === 'nakshatra') {
             infoShortIntro.innerHTML = `<p>${itemData.shortIntro || ''}</p>`;
             if (itemData.rulingDeityInfo) {
                 infoRulingDeityHeading.style.display = 'block';
@@ -886,7 +916,6 @@ function showInfoPanel(itemDataOrCategoryKey) {
             }
 
         } else if (itemData.type === 'planet') {
-            loadItemIcon(itemData.id);
             infoPlanetDetailsDiv.style.display = 'block';
             infoPlanetMainDescription.textContent = itemData.mainDescription || '';
             infoShortIntro.innerHTML = `<p>${itemData.psychologicalInfluence || ''}</p>`;
@@ -912,7 +941,6 @@ function showInfoPanel(itemDataOrCategoryKey) {
             }
 
         } else if (itemData.type === 'nakshatra_guna') {
-            loadItemIcon(itemData.id); // Load icon for Guna
             infoGunaDetailsDiv.style.display = 'block';
             const titlePartsGuna = itemData.title.split('–');
             const mainTitleGuna = titlePartsGuna[0] ? titlePartsGuna[0].trim() : itemData.name;
@@ -932,7 +960,6 @@ function showInfoPanel(itemDataOrCategoryKey) {
             }
 
         } else if (itemData.type === 'purushartha') {
-            loadItemIcon(itemData.id); // Load icon for Purushartha
             infoPurusharthaDetailsDiv.style.display = 'block';
             const titlePartsPurush = itemData.title.split('–');
             const mainTitlePurush = titlePartsPurush[0] ? titlePartsPurush[0].trim() : `Purushartha: ${itemData.name}`;
@@ -952,7 +979,6 @@ function showInfoPanel(itemDataOrCategoryKey) {
             } else { attributeRelatedNakshatrasList.innerHTML = '<li>No directly related Nakshatras.</li>'; }
 
         } else if (itemData.type === 'gana') {
-            loadItemIcon(itemData.id); // Load icon for Gana
             infoGanaDetailsDiv.style.display = 'block';
             const titlePartsGana = itemData.title.split('–');
             const mainTitleGana = titlePartsGana[0] ? titlePartsGana[0].trim() : itemData.name;
@@ -1102,11 +1128,11 @@ function init() {
     for (const key in elements) delete elements[key];
     currentlyClickedId = null;
     currentClickedCategory = null;
-    calculateLayoutAndPositions();
+    calculateLayoutAndPositions(); // This will set svgWidth
     drawConnections();
     Object.values(data).flat().forEach(item => {
         if(item && typeof item === 'object' && item.id && typeof item.cx === 'number' && typeof item.cy === 'number') {
-            createNode(item);
+            createNode(item); // createNode will now use the updated svgWidth
         }
     });
 }
