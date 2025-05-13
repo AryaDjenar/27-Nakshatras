@@ -657,7 +657,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     }
 
     svg text {
-        font-size: 8px; /* Adjust base size for SVG labels */
+        font-size: 7px; /* Adjust base size for SVG labels */
     }
 }
     #page-footer {
