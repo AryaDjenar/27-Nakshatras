@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>27 Nakshatras</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Xanh+Mono:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="diagram-container">
+        <svg id="nakshatra-svg"></svg>
+    </div>
+
+    <header>
+        <h1>27 Nakshatras</h1>
+        <h2 class="subtitle">The Vedic Archetypes of Your Inner World</h2>
+    </header>
+
+    <div id="intro-container">
+        <p>In Vedic astrology, the 27 Nakshatras are lunar archetypes that reveal the emotional, spiritual, and karmic blueprint of the self.</p>
+        <p>Referenced in the <em><a href="https://en.wikipedia.org/wiki/Brihat_Parashara_Hora_Shastra" target="_blank" rel="noopener noreferrer">Brihat Parashara Hora Shastra</a></em> and <em><a href="https://en.wikipedia.org/wiki/Phaladeepika" target="_blank" rel="noopener noreferrer">Phaladeepika</a></em>, these star-clusters are not ruled by signs, but by the 9 Grahas, planetary forces that act as lenses for the soul's temperament.</p>
+        <p>Each Nakshatra is a living pattern: some grounded in duty, others in desire, liberation, or survival. Their planetary rulers shape the way you relate, respond, perceive, and grow.</p>
+        <p>This guide decodes the symbolism, psychology, and myth behind the 27 Nakshatras and their planetary lords, offering a more nuanced and timeless understanding of your inner world.</p>
+        <p class="interactive-instruction">
+            <span class="pointer-symbol">⛶</span>
+            Click on any label in the diagram to reveal more information.
+        </p>
+    </div>
+
+    <div id="category-links-container">
+        <p>Learn more about:</p>
+        <div class="category-link-item" data-category="planets" data-category-name="The 9 Planets (Grahas)">
+            <span class="category-dot" data-category="planets"></span>
+            <span class="category-text">9 Planets</span>
+        </div>
+        <div class="category-link-item" data-category="purusharthas" data-category-name="The Purusharthas">
+            <span class="category-dot" data-category="purusharthas"></span>
+            <span class="category-text">Purushartha</span>
+        </div>
+        <div class="category-link-item" data-category="ganas" data-category-name="The Ganas">
+            <span class="category-dot" data-category="ganas"></span>
+            <span class="category-text">Gana</span>
+        </div>
+        <div class="category-link-item" data-category="nakshatraGunas" data-category-name="The Nakshatra Gunas">
+            <span class="category-dot" data-category="nakshatraGunas"></span>
+            <span class="category-text">Guna</span>
+        </div>
+        <div class="category-link-item" data-category="nakshatrasOverview" data-category-name="The Nakshatras">
+            <span class="category-dot" data-category="nakshatrasOverview"></span>
+            <span class="category-text">Nakshatras</span>
+        </div>
+        </div>
+
+    <div id="info-panel">
+        <button id="close-panel">&times;</button>
+        <div id="nakshatra-icon-container"></div>
+        <h2 id="info-title"></h2>
+        <p id="info-short-intro" class="info-panel-paragraph"></p> <h3 id="info-ruling-deity-heading" class="info-panel-subheading" style="display:none;">Ruling Deity:</h3>
+        <p id="info-ruling-deity-text" class="info-panel-subheading-text"></p>
+
+        <div id="info-guna-details" style="display:none;">
+            <h3 class="info-panel-subheading" id="info-guna-classical-heading">Classical view:</h3>
+            <p class="info-panel-paragraph" id="info-guna-classical-text"></p>
+            <h3 class="info-panel-subheading" id="info-guna-modern-summary-heading">Modern summary:</h3>
+            <p class="info-panel-paragraph" id="info-guna-modern-summary-text"></p>
+            <h3 class="info-panel-subheading">Modern Traits:</h3> <ul id="info-guna-modern-traits-list"></ul>
+            <h3 class="info-panel-subheading">Examples:</h3> <ul id="info-guna-examples-list"></ul>
+            <h3 class="info-panel-subheading">Positive Side:</h3> <ul id="info-guna-positive-list"></ul>
+            <h3 class="info-panel-subheading">Shadow Side:</h3> <ul id="info-guna-shadow-list"></ul>
+        </div>
+        <div id="info-purushartha-details" style="display:none;">
+            <h3 class="info-panel-subheading" id="info-purushartha-classical-heading">Classical view:</h3>
+            <p class="info-panel-paragraph" id="info-purushartha-classical-text"></p>
+            <h3 class="info-panel-subheading" id="info-purushartha-modern-summary-heading">Modern summary:</h3>
+            <p class="info-panel-paragraph" id="info-purushartha-modern-summary-text"></p>
+            <h3 class="info-panel-subheading">Modern Traits:</h3> <ul id="info-purushartha-modern-traits-list"></ul>
+            <h3 class="info-panel-subheading">Examples:</h3> <ul id="info-purushartha-examples-list"></ul>
+            <h3 class="info-panel-subheading">Positive Side:</h3> <ul id="info-purushartha-positive-list"></ul>
+            <h3 class="info-panel-subheading">Shadow Side:</h3> <ul id="info-purushartha-shadow-list"></ul>
+        </div>
+        <div id="info-gana-details" style="display:none;">
+            <h3 class="info-panel-subheading" id="info-gana-classical-heading">Classical view:</h3>
+            <p class="info-panel-paragraph" id="info-gana-classical-text"></p>
+            <h3 class="info-panel-subheading" id="info-gana-modern-summary-heading">Modern summary:</h3>
+            <p class="info-panel-paragraph" id="info-gana-modern-summary-text"></p>
+            <h3 class="info-panel-subheading">Modern Traits:</h3> <ul id="info-gana-modern-traits-list"></ul>
+            <h3 class="info-panel-subheading">Examples:</h3> <ul id="info-gana-examples-list"></ul>
+            <h3 class="info-panel-subheading">Positive Side:</h3> <ul id="info-gana-positive-list"></ul>
+            <h3 class="info-panel-subheading">Shadow Side:</h3> <ul id="info-gana-shadow-list"></ul>
+        </div>
+        <div id="info-planet-details" style="display:none;">
+            <p id="info-planet-main-description" class="info-panel-paragraph"></p>
+            <h3 id="info-planet-ruling-nakshatras-heading" class="info-panel-subheading">Ruling Nakshatra(s):</h3>
+            <ul id="info-planet-ruling-nakshatras-list"></ul>
+            <h3 id="info-planet-influence-heading" class="info-panel-subheading"></h3>
+            <p id="info-planet-influence-text" class="info-panel-subheading-text"></p>
+        </div>
+
+        <div id="nakshatra-attributes-container" style="display:none;">
+            <h3>Attributes:</h3>
+            <ul id="attributes-list"></ul>
+        </div>
+
+        <div id="info-guna-associated-nakshatras" style="display:none;">
+            <h3 id="info-guna-associated-nakshatras-heading"></h3>
+            <ul id="guna-associated-nakshatras-list"></ul>
+        </div>
+         <div id="info-attribute-related-nakshatras" style="display:none;">
+            <h3 id="info-category-items-heading">Items in this Category:</h3>
+            <ul id="attribute-related-nakshatras-list"></ul>
+        </div>
+
+        <div id="nakshatra-classical-quotes" style="display:none;">
+            <h3 class="info-panel-subheading">Classical Mentions:</h3>
+            <p id="quote-bphs" class="classical-quote-text"></p>
+            <p id="quote-phaladeepika" class="classical-quote-text"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

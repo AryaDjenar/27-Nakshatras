@@ -1,0 +1,442 @@
+body {
+    font-family: 'Xanh Mono', monospace;
+    background-color: #27102a;
+    background-image: radial-gradient(circle, #4a1e50, #27102a);
+    color: #FFFFFF;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* Ensures top-to-bottom flow */
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#diagram-container { /* Diagram comes first visually */
+    width: 100%;
+    flex-grow: 1; /* Takes up most of the space */
+    min-height: 50vh; /* Minimum height for the diagram */
+    max-width: 1500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px; /* Space below diagram */
+}
+
+header { /* Title/Subtitle block - now below diagram */
+    width: 100%;
+    text-align: center;
+    padding-top: 10px; /* Space above title block */
+    order: 2; /* Ensures it comes after diagram-container in flex layout */
+}
+
+h1 {
+    color: #FFFFFF;
+    font-family: 'Xanh Mono', monospace;
+    text-shadow: none;
+    font-size: 1.9em;
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+h2.subtitle {
+    color: #B3B3B3;
+    font-family: 'Xanh Mono', monospace;
+    font-size: 0.95em;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 15px; /* Space below subtitle */
+    font-weight: normal;
+}
+
+#intro-container { /* Intro text - now below title/subtitle */
+    width: 100%;
+    max-width: 800px;
+    text-align: left;
+    padding: 0 15px 10px 15px;
+    color: #E0E0E0;
+    font-size: 0.9em;
+    line-height: 1.6;
+    order: 3; /* Ensures it comes after header in flex layout */
+}
+#intro-container p {
+    margin-bottom: 0.8em;
+}
+#intro-container em, #intro-container a {
+    font-style: italic;
+    color: #C6ECAE;
+    text-decoration: none;
+}
+#intro-container a:hover {
+    text-decoration: underline;
+}
+
+.interactive-instruction {
+    color: #C6ECAE;
+    font-size: 0.85em; /* Increased size for better visibility */
+    margin-top: 10px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.interactive-instruction .pointer-symbol {
+    font-size: 1.5em; /* Adjust size of text symbol */
+    margin-right: 8px;
+    line-height: 1;
+}
+
+/* Styles for Category Links */
+#category-links-container {
+    order: 4; /* Places it after the intro container */
+    width: 100%;
+    max-width: 800px;
+    text-align: center; /* Center the content of this container */
+    padding: 15px;
+    margin-top: 10px;
+    color: #E0E0E0; /* Default text color */
+    font-size: 0.9em;
+}
+#category-links-container p {
+    margin-bottom: 10px;
+    font-style: italic;
+    color: #B3B3B3; /* Same as interactive instruction color */
+}
+.category-link-item {
+    display: inline-flex; /* Align dot and text nicely */
+    align-items: center;
+    margin: 0 15px 10px; /* Spacing around items */
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.category-link-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover background */
+    color: #FFFFFF;
+}
+.category-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #B3B3B3; /* Default dot color - you can change this */
+    border-radius: 50%;
+    margin-right: 8px;
+    display: inline-block;
+}
+.category-text {
+    font-family: 'Xanh Mono', monospace;
+}
+/* End Styles for Category Links */
+
+svg { /* General SVG styling (applies to the main diagram) */
+    display: block;
+    overflow: visible;
+}
+
+/* Styling for the dynamically loaded icon container */
+#nakshatra-icon-container {
+    width: 60px;
+    height: 60px;
+    background-color: #cba7cb; /* Lilac background for the circle */
+    border-radius: 50%; /* Makes it a circle */
+    border: 1.5px solid #B2A2D6; /* Subtle border */
+    display: flex; /* Use flex to center content */
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto; /* Center horizontally, space below */
+    padding: 8px; /* Inner spacing for the icon */
+    box-sizing: border-box;
+    /* Container is hidden by default; JS shows it */
+    display: none;
+}
+
+/* Styling for ANY SVG loaded into the icon container */
+#nakshatra-icon-container svg {
+    width: 100%;  /* Make the SVG fill the container's padding box */
+    height: 100%; /* Make the SVG fill the container's padding box */
+    display: block; /* Ensures SVG takes up space correctly */
+}
+
+
+svg text { /* Styling for text within the main diagram SVG */
+    fill: #E0E0E0;
+    font-family: 'Xanh Mono', monospace;
+    font-size: 12px; /* SVG text size */
+    pointer-events: none;
+    text-anchor: middle;
+}
+
+.planet-symbol { /* Styling for planet symbols in the main diagram */
+    font-family: 'Times New Roman', Times, serif;
+    fill: #FFFFFF;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+}
+
+.node { /* Hover/click target circle in main diagram */
+    cursor: pointer;
+    fill: transparent;
+}
+
+.node-group > circle { /* Circles in the main diagram */
+    transition: r 0.2s ease-out, fill 0.3s ease-in-out, filter 0.3s ease-in-out;
+    stroke: none;
+    stroke-width: 0;
+}
+
+.node-group.category-glow > circle { /* Glow effect for category highlight */
+     filter: drop-shadow(0 0 13px rgba(220, 200, 255, 0.95));
+}
+
+@keyframes pulseNodeGlowOnly {
+    0% { filter: drop-shadow(0 0 5px rgba(200, 180, 230, 0.6)); }
+    50% { filter: drop-shadow(0 0 14px rgba(200, 180, 230, 0.8)); }
+    100% { filter: drop-shadow(0 0 5px rgba(200, 180, 230, 0.6)); }
+}
+
+@keyframes pulseLineActive {
+    0% { stroke-width: 1px; filter: drop-shadow(0 0 3px rgba(200, 180, 230, 0.6)); }
+    50% { stroke-width: 1.8px; filter: drop-shadow(0 0 7px rgba(200, 180, 230, 0.8)); }
+    100% { stroke-width: 1px; filter: drop-shadow(0 0 3px rgba(200, 180, 230, 0.6)); }
+}
+
+.node-group.highlight > circle,
+.node-group.clicked > circle {
+    animation: pulseNodeGlowOnly 1.2s infinite ease-in-out;
+}
+.node-text.highlight,
+.node-text.clicked {
+    fill: #E0D8F0;
+    font-weight: bold;
+}
+
+.secondary-highlight-text {
+    fill: #C8B8E0;
+    font-weight: normal;
+}
+
+.connection-line {
+    stroke-width: 0.6px;
+    transition: stroke 0.3s ease, stroke-width 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+    opacity: 0.47;
+    filter: drop-shadow(0 0 1.5px rgba(220, 220, 255, 0.15));
+}
+
+.connection-line.highlight {
+    stroke: #D8BFD8 !important;
+    stroke-width: 1.2px;
+    opacity: 1;
+    animation: pulseLineActive 1.2s infinite ease-in-out;
+    filter: drop-shadow(0 0 5px rgba(216, 191, 216, 0.7));
+}
+
+/* Info Panel styles */
+#info-panel {
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 90%; max-width: 420px;
+    background-color: rgba(39, 16, 42, 0.93);
+    color: #FFFFFF;
+    border: 1.5px solid #B2A2D6;
+    border-radius: 12px; padding: 20px 25px;
+    box-shadow: 0 0 30px rgba(178, 162, 214, 0.5);
+    z-index: 1000; display: none; opacity: 0;
+    font-family: 'Xanh Mono', monospace;
+    transition: opacity 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-size: 14px;
+    transform-origin: center center;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+#info-panel.visible { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+#info-panel h2 { /* Title inside info panel */
+    color: #C8A2C8; margin-top: 0; margin-bottom: 15px;
+    font-size: 1.5em;
+    text-align: center;
+    font-family: 'Xanh Mono', monospace;
+    line-height: 1.3;
+}
+.info-panel-title-subtitle {
+    display: block;
+    font-size: 80%;
+    font-style: italic;
+    color: #D8BFD8;
+    margin-top: 2px;
+}
+
+#info-panel #info-short-intro,
+#info-panel .info-panel-paragraph {
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: #FFFFFF;
+}
+#info-panel #info-short-intro p {
+    margin-bottom: 0.8em;
+}
+#info-panel #info-short-intro ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin-bottom: 0.8em;
+}
+#info-panel #info-short-intro li {
+    padding: 2px 0;
+}
+#info-panel #info-short-intro strong {
+    color: #D8BFD8;
+}
+#info-panel #info-short-intro em {
+    font-style: italic;
+    color: #C6ECAE;
+}
+
+#info-panel #info-ruling-deity-heading,
+#info-panel .info-panel-subheading {
+    color: #C8A2C8;
+    font-size: 1.1em;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-family: 'Xanh Mono', monospace;
+    font-weight: bold;
+}
+#info-panel #info-ruling-deity-text,
+#info-panel .info-panel-subheading-text {
+    margin-top: 0;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: #FFFFFF;
+    font-size: 0.95em;
+}
+
+#info-panel ul { list-style: none; padding-left: 0; margin-bottom: 12px; }
+#info-panel ul li {
+    padding: 4px 0;
+    font-size: 1em;
+    line-height: 1.4;
+}
+#nakshatra-attributes-container ul li,
+#info-attribute-related-nakshatras ul li,
+#info-guna-associated-nakshatras ul li {
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(200, 162, 200, 0.25);
+}
+ #nakshatra-attributes-container ul li:last-child,
+  #info-attribute-related-nakshatras ul li:last-child,
+  #info-guna-associated-nakshatras ul li:last-child {
+    border-bottom: none;
+}
+
+.attribute-description,
+.detail-list-item-description {
+    display: block;
+    font-size: 0.9em;
+    color: rgba(224, 224, 224, 0.85);
+    padding-left: 10px;
+    margin-top: 3px;
+    line-height: 1.5;
+}
+
+#info-panel h3 { /* General h3 inside info panel, can be reused by .info-panel-subheading */
+    color: #C8A2C8;
+    font-size: 1.1em;
+    margin-top: 18px; margin-bottom: 10px;
+    font-family: 'Xanh Mono', monospace;
+    font-weight: bold;
+}
+#close-panel {
+    color: #C8A2C8;
+    position: absolute; top: 12px; right: 12px; background: transparent; border: none;
+    font-size: 30px; cursor: pointer;
+    font-family: Arial, sans-serif; padding: 5px; line-height: 0.5;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+#close-panel:hover { color: #FFFFFF; transform: scale(1.1); }
+
+
+/* Classical Quotes Section Styles */
+#nakshatra-classical-quotes {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(200, 162, 200, 0.25);
+}
+
+#nakshatra-classical-quotes h3.info-panel-subheading {
+    margin-top: 0;
+}
+
+.classical-quote-text {
+    font-size: 0.9em;
+    color: rgba(224, 224, 224, 0.9);
+    line-height: 1.5;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+#quote-bphs:empty,
+#quote-phaladeepika:empty {
+    display: none;
+}
+
+
+/* CSS Variables (colors) */
+:root {
+    --color-nakshatra-default: #8B7A98;
+    --color-planet-mars: #D14E4E;
+    --color-planet-sun: #F6C145;
+    --color-planet-moon: #A2D2F0;
+    --color-planet-mercury: #88C999;
+    --color-planet-jupiter: #E4B96F;
+    --color-planet-venus: #D98BA1;
+    --color-planet-saturn: #7C91A5;
+    --color-planet-rahu: #A072C1;
+    --color-planet-ketu: #B5A27E;
+    --color-gana-base: #9F6F7D;
+    --color-purushartha-base: #0F5257;
+    --color-nakshatra-guna-base: #E1D9BC;
+
+    --color-dot-planets: #F6C145; /* Used for the gradient if not hardcoded */
+    --color-dot-purusharthas: #0F5257;
+    --color-dot-ganas: #9F6F7D;
+    --color-dot-nakshatraGunas: #E1D9BC;
+    /* ADD NEW VARIABLE FOR NAKSHATRAS OVERVIEW DOT */
+    --color-dot-nakshatras-overview: #BCA8D6; /* Example: a light lavender */
+}
+
+/* Category dot colors */
+.category-dot[data-category="planets"] {
+    background-image: linear-gradient(to right, #F6C145, #D14E4E);
+}
+.category-dot[data-category="purusharthas"] { background-color: var(--color-dot-purusharthas); }
+.category-dot[data-category="ganas"] { background-color: var(--color-dot-ganas); }
+.category-dot[data-category="nakshatraGunas"] { background-color: var(--color-dot-nakshatraGunas); }
+/* ADD RULE FOR NEW NAKSHATRAS OVERVIEW DOT */
+.category-dot[data-category="nakshatrasOverview"] { background-color: var(--color-dot-nakshatras-overview); }
+
+
+/* Category dot colors */
+/* CHANGE: Gradient applied to the planets category dot */
+.category-dot[data-category="planets"] {
+    /* background-color: var(--color-dot-planets); */ /* Old solid color */
+    background-image: linear-gradient(to right, #F6C145, #D14E4E,  #88C999); /* Example: Sun yellow to Mars red */
+}
+.category-dot[data-category="purusharthas"] { background-color: var(--color-dot-purusharthas); }
+.category-dot[data-category="ganas"] { background-color: var(--color-dot-ganas); }
+.category-dot[data-category="nakshatraGunas"] { background-color: var(--color-dot-nakshatraGunas); }
+
+/* Node fill colors in the SVG diagram (these remain solid colors) */
+circle.nakshatra-node { fill: var(--color-nakshatra-default); }
+circle.gana-node { fill: var(--color-gana-base); }
+circle.purushartha-node { fill: var(--color-purushartha-base); }
+circle.nakshatra_guna-node { fill: var(--color-nakshatra-guna-base); }
+circle.planet-node[data-id="mars"] { fill: var(--color-planet-mars); }
+circle.planet-node[data-id="venus"] { fill: var(--color-planet-venus); }
+circle.planet-node[data-id="mercury"] { fill: var(--color-planet-mercury); }
+circle.planet-node[data-id="moon"] { fill: var(--color-planet-moon); }
+circle.planet-node[data-id="sun"] { fill: var(--color-planet-sun); }
+circle.planet-node[data-id="jupiter"] { fill: var(--color-planet-jupiter); }
+circle.planet-node[data-id="saturn"] { fill: var(--color-planet-saturn); }
+circle.planet-node[data-id="rahu"] { fill: var(--color-planet-rahu); }
+circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
