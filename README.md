@@ -15,18 +15,6 @@ This is a personal and educational project built to explore and visualize classi
 • Learn more panels on Grahas, Gunas, Ganas, and Purusharthas  
 • Rooted in mythological and scriptural context
 
-## Tech Stack
-
-• HTML  
-• CSS  
-• JavaScript  
-(no frameworks or external libraries)
-
-## Deployment
-
-This project is hosted using GitHub Pages.  
-It is intended for both personal learning and for anyone who wants a visual and structured way to study the Nakshatras.
-
 ## References
 
 This work is based primarily on the following classical texts:
