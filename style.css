@@ -589,7 +589,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     }
     #intro-container {
         font-size: 0.78em;
-        padding: 0 20px 8px 20px;
+        padding: 0 20px 8px 5px;
     }
     #intro-container p {
         margin-bottom: 0.6em;
@@ -657,7 +657,7 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     }
 
     svg text {
-        font-size: 7px; /* Adjust base size for SVG labels */
+        font-size: 8px; /* Adjust base size for SVG labels */
     }
 }
     #page-footer {
@@ -675,4 +675,3 @@ circle.planet-node[data-id="ketu"] { fill: var(--color-planet-ketu); }
     .copyright-text {
         font-size: 0.7em;
     }
-}
